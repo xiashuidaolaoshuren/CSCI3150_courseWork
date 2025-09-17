@@ -1,0 +1,16 @@
+{
+  "name": "OS C Lab (Ubuntu 20.04)",
+  "image": "ubuntu:20.04",
+  "remoteUser": "root",
+  "workspaceFolder": "/work",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/work,type=bind",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -lc 'set -eux; apt-get update; apt-get install -y --no-install-recommends build-essential gcc-9 g++-9 make gdb ca-certificates; update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90; update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90; gcc --version'"
+}
