@@ -1,0 +1,4 @@
+1.  If the code cannot be compiled, 40 marks would be deducted
+2.  If the executable file is terminated by exceptions such as segment fault or timeout (5s) and there is no output in output.txt, 40 marks would
+be deducted
+3.  Each line in output.txt is 10 marks and full marks would be assigned if your executable file can output 10 correct results
