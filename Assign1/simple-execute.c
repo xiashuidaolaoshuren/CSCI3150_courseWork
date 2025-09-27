@@ -99,8 +99,10 @@ int shell_execute(char ** args, int argc)
         }
         
         if (child_pid == 0) {
-		printf("Child process #%d executing: %s\n", i, cmd_args[0]);
-
+			if (i == 0) printf("\n");
+			printf("Child process %d executing: %s\n", i, cmd_args[0]);
+			if (i == num_pipes) printf("\n");
+				
             // Redirect input if not the first command
             if (read_fd != 0) {
                 dup2(read_fd, STDIN_FILENO);
