@@ -34,7 +34,7 @@ int shell_execute(char ** args, int argc)
     if (num_pipes == 0) {
         int child_pid, wait_return, status;
 
-	printf("Child process running...\n\n");
+	printf("Child process executing\n\n");
         
         if((child_pid = fork()) < 0)
 		{
@@ -55,7 +55,7 @@ int shell_execute(char ** args, int argc)
 				perror("wait() error \n"); 
 		}
 
-		printf("\nChild process finished\n");
+		printf("\nChild process finished\n\n");
 				
 		return 0;
     }
@@ -139,7 +139,7 @@ int shell_execute(char ** args, int argc)
         wait(&status);
     }
 
-	printf("Child process finished\n");
+	printf("Child process finished\n\n");
     
     return 0;
 }
