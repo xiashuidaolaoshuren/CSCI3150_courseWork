@@ -34,7 +34,7 @@ int shell_execute(char ** args, int argc)
     if (num_pipes == 0) {
         int child_pid, wait_return, status;
 
-	printf("Child process executing\n\n");
+	printf("\nChild process executing\n------\n");
         
         if((child_pid = fork()) < 0)
 		{
@@ -55,7 +55,7 @@ int shell_execute(char ** args, int argc)
 				perror("wait() error \n"); 
 		}
 
-		printf("\nChild process finished\n\n");
+		printf("\n------\nChild process finished\n\n");
 				
 		return 0;
     }
@@ -101,7 +101,7 @@ int shell_execute(char ** args, int argc)
         if (child_pid == 0) {
 			if (i == 0) printf("\n");
 			printf("Child process %d executing: %s\n", i, cmd_args[0]);
-			if (i == num_pipes) printf("\n");
+			if (i == num_pipes) printf("------\n");
 				
             // Redirect input if not the first command
             if (read_fd != 0) {
@@ -139,7 +139,7 @@ int shell_execute(char ** args, int argc)
         wait(&status);
     }
 
-	printf("Child process finished\n\n");
+	printf("------\nChild process finished\n\n");
     
     return 0;
 }
