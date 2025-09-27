@@ -20,7 +20,7 @@ int shell_execute(char ** args, int argc)
         return -1;
 
     // Find all pipe positions
-    int pipe_positions[3];
+    int pipe_positions[MAX_ARG_NUM];
     int num_pipes = 0;
     
     for (int i = 0; i < argc - 1; i++) {
@@ -33,24 +33,29 @@ int shell_execute(char ** args, int argc)
     // If no pipes, execute normally
     if (num_pipes == 0) {
         int child_pid, wait_return, status;
+
+	printf("Child process running...\n\n");
         
         if((child_pid = fork()) < 0)
 		{
-			printf("fork() error \n");
+			perror("fork() error \n");
 		}
 		else if (child_pid == 0)
 		{
+
 			if ( execvp(args[0], args) < 0)
 			{ 
-				printf("execvp() error \n");
+				perror("execvp() error \n");
 				exit(-1);
 			}
 		}
 		else
 		{
 			if ((wait_return = wait(&status)) < 0)
-				printf("wait() error \n"); 
+				perror("wait() error \n"); 
 		}
+
+		printf("\nChild process finished\n");
 				
 		return 0;
     }
@@ -59,7 +64,7 @@ int shell_execute(char ** args, int argc)
     int pipefd[2];
     int read_fd = 0;  // Initially no input pipe
     int write_fd;
-    
+
     for (int i = 0; i <= num_pipes; i++) {
         // Determine start and end positions for this command
         int start = (i == 0) ? 0 : pipe_positions[i-1] + 1;
@@ -78,7 +83,7 @@ int shell_execute(char ** args, int argc)
         // Create pipe for all commands except the last one
         if (i < num_pipes) {
             if (pipe(pipefd) == -1) {
-                printf("pipe() error \n");
+                perror("pipe() error \n");
                 exit(-1);
             }
             write_fd = pipefd[1];
@@ -87,12 +92,15 @@ int shell_execute(char ** args, int argc)
         }
         
         int child_pid = fork();
+
         if (child_pid == -1) {
-            printf("fork() error \n");
+            perror("fork() error \n");
 			return 0;
         }
         
         if (child_pid == 0) {
+		printf("Child process #%d executing: %s\n", i, cmd_args[0]);
+
             // Redirect input if not the first command
             if (read_fd != 0) {
                 dup2(read_fd, STDIN_FILENO);
@@ -107,7 +115,7 @@ int shell_execute(char ** args, int argc)
             
 			// Execute command
             execvp(cmd_args[0], cmd_args);
-            printf("execvp() error \n");
+            perror("execvp() error \n");
             exit(1);
         }
         
@@ -128,6 +136,8 @@ int shell_execute(char ** args, int argc)
         int status;
         wait(&status);
     }
+
+	printf("Child process finished\n");
     
     return 0;
 }
