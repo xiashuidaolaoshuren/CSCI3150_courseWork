@@ -127,6 +127,9 @@ int shell_execute(char ** args, int argc)
             perror("execvp() error \n");
             exit(1);
         }
+        else {
+            usleep(5000 * (i + 1)); 
+        }
         
         // Close file descriptors in parent
         if (read_fd != 0) {
