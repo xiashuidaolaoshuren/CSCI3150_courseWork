@@ -5,7 +5,12 @@
 #include <errno.h>
 #include <unistd.h>
 
-
+/*
+  Team members:
+  1. Chun Ning SO 1155192846
+  2. Xian ZHANG 1155193168
+  3. Muhammad Usman Bin MUJEEB 1155183945
+*/
 
 #define MAX_LINE_SIZE 1024   //the maximum bytes of an inputted command line 
 #define MAX_ARG_NUM  30    //the maximum number of arguments in a command line
