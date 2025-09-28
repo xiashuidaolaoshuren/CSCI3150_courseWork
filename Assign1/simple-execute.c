@@ -1,3 +1,10 @@
+/*
+  Team members:
+  1. Chun Ning SO 1155192846
+  2. Xian ZHANG 1155193168
+  3. Muhammad Usman Bin MUJEEB 1155183945
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/wait.h>
